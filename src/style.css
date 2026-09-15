@@ -1,1 +1,219 @@
+:root {
+  --bg-dark: #0a0b0e;
+  --panel-bg: rgba(18, 20, 26, 0.88);
+  --accent: #ff6600;
+  --accent-blue: #0088ff;
+  --text-main: #ffffff;
+  --text-dim: #9aa0a6;
+  --danger: #e63946;
+}
 
+* {
+  box-sizing: border-box;
+  user-select: none;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-dark);
+}
+
+#canvas-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+#hud-overlay {
+  position: absolute;
+  bottom: 25px;
+  right: 25px;
+  z-index: 10;
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+.hud-card {
+  background: var(--panel-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  color: var(--text-main);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+#speedo-card {
+  width: 180px;
+  text-align: center;
+}
+
+.speed-value {
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--text-main);
+}
+
+.speed-unit {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 2px;
+}
+
+.gear-badge {
+  display: inline-block;
+  background: var(--accent);
+  color: #000;
+  font-weight: 900;
+  padding: 2px 10px;
+  border-radius: 4px;
+  margin: 6px 0;
+}
+
+.tachometer-container {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.tachometer-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #00ff66, var(--accent), var(--danger));
+  transition: width 0.05s linear;
+}
+
+.hud-meta, .diag-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+.hud-meta b, .diag-item span {
+  color: var(--text-main);
+}
+
+.modal, #pause-drawer {
+  position: absolute;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.modal.hidden, #pause-drawer.hidden {
+  display: none !important;
+}
+
+.modal-box {
+  background: var(--panel-bg);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  width: 500px;
+  max-width: 90%;
+  padding: 24px;
+  color: var(--text-main);
+}
+
+.modal-box.wide {
+  width: 1100px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header, .drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.vehicle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  overflow-y: auto;
+  padding: 10px 0;
+  flex: 1;
+}
+
+.vehicle-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.vehicle-card:hover, .vehicle-card.selected {
+  border-color: var(--accent);
+  background: rgba(255, 102, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.menu-btn, .btn-primary, .btn-secondary, .preset-btn {
+  background: var(--accent);
+  color: #000;
+  font-weight: 700;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: filter 0.2s;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text-main);
+}
+
+.menu-btn.danger {
+  background: var(--danger);
+  color: #fff;
+}
+
+.preset-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.preset-btn.active {
+  outline: 2px solid var(--accent);
+}
