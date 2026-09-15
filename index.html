@@ -1,1 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soft-Body Dynamics Engine (BeamNG Web)</title>
+  <link rel="stylesheet" href="./src/style.css" />
+</head>
+<body>
+  <div id="canvas-container"></div>
 
+  <!-- HUD Telemetry Display -->
+  <div id="hud-overlay">
+    <div class="hud-card" id="speedo-card">
+      <div class="speed-value" id="hud-speed">0</div>
+      <div class="speed-unit">KM/H</div>
+      <div class="gear-badge" id="hud-gear">1</div>
+      <div class="tachometer-container">
+        <div class="tachometer-bar" id="hud-rpm-bar"></div>
+      </div>
+      <div class="hud-meta">
+        <span>RPM: <b id="hud-rpm">850</b></span>
+        <span>BOOST: <b id="hud-boost">0.0 PSI</b></span>
+      </div>
+    </div>
+
+    <div class="hud-card" id="diagnostics-card">
+      <div class="diag-item">ENGINE HEALTH: <span id="diag-engine">100%</span></div>
+      <div class="diag-item">COOLANT TEMP: <span id="diag-temp">85°C</span></div>
+      <div class="diag-item">BEAM STRESS: <span id="diag-stress">0.0%</span></div>
+      <div class="diag-item">PHYSICS RATE: <span id="diag-hz">2000 Hz</span></div>
+    </div>
+  </div>
+
+  <!-- In-Game Pause Drawer (ESC Modal) -->
+  <div id="pause-drawer" class="hidden">
+    <div class="drawer-header">
+      <h2>SIMULATION PAUSED</h2>
+      <button class="close-btn" id="btn-resume">RESUME [ESC]</button>
+    </div>
+    <div class="drawer-content">
+      <button class="menu-btn" id="btn-open-vehicles">VEHICLE SELECTOR [Ctrl+E]</button>
+      <button class="menu-btn" id="btn-open-maps">MAP ENVIRONMENT</button>
+      <button class="menu-btn" id="btn-open-graphics">GRAPHICS CONFIGURATION</button>
+      <button class="menu-btn" id="btn-reset-physics">REPAIR & RESET [R]</button>
+      <button class="menu-btn danger" id="btn-quit">MAIN MENU</button>
+    </div>
+  </div>
+
+  <!-- Interactive Vehicle Selector Grid -->
+  <div id="vehicle-modal" class="modal hidden">
+    <div class="modal-box wide">
+      <div class="modal-header">
+        <h2>VEHICLE ROSTER & SPECIFICATIONS</h2>
+        <button class="close-btn" id="btn-close-vehicles">✕</button>
+      </div>
+      <div class="vehicle-grid" id="vehicle-grid-container"></div>
+      <div class="modal-footer">
+        <button class="btn-primary" id="btn-spawn-replace">REPLACE VEHICLE</button>
+        <button class="btn-secondary" id="btn-spawn-beside">SPAWN BESIDE (+3M)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Graphics Settings Subsystem Modal -->
+  <div id="graphics-modal" class="modal hidden">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2>GRAPHICS & ENGINE PRESETS</h2>
+        <button class="close-btn" id="btn-close-graphics">✕</button>
+      </div>
+      <div class="preset-buttons">
+        <button class="preset-btn" data-preset="low">LOW (500Hz, Fast)</button>
+        <button class="preset-btn" data-preset="medium">MEDIUM (1000Hz, PBR)</button>
+        <button class="preset-btn" data-preset="high">HIGH (1500Hz, Shadows)</button>
+        <button class="preset-btn active" data-preset="ultra">ULTRA (2000Hz, AAA)</button>
+      </div>
+      <div class="settings-list">
+        <label><input type="checkbox" id="chk-stress-overlay" /> Enable Stress Visualizer</label>
+        <label><input type="checkbox" id="chk-shadows" checked /> Directional Shadow Maps</label>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./src/main.ts"></script>
+</body>
+</html>
